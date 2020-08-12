@@ -1,0 +1,46 @@
+version: 2.1
+
+jobs:
+
+  build:
+    docker:
+      - image: google/cloud-sdk
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: build docker image
+          command: make build
+
+  publish:
+    docker:
+      - image: google/cloud-sdk
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: build docker image
+          command: make build
+      - run:
+          name: push image to gcr.io
+          command: make push-to-gcr
+      - run:
+          name: push image to quay.io
+          command: make push-to-quay
+
+workflows:
+  version: 2
+  flow:
+    jobs:
+      - build:
+          context: google-cloud-platform
+          filters:
+            branches:
+              ignore:
+                - master
+      - publish:
+          context: google-cloud-platform
+          filters:
+            branches:
+              only:
+                - master
