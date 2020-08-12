@@ -16,6 +16,17 @@ RUN cd /go/src/github.com/rebuy-de/exporter-merger/ && CGO_ENABLED=0 make instal
 
 # final stage
 FROM alpine
+MAINTAINER Platform Engineering <platform@mettle.co.uk>
+
+ARG git_repository="Unknown"
+ARG git_commit="Unknown"
+ARG git_branch="Unknown"
+ARG built_on="Unknown"
+
+LABEL git.repository=$git_repository
+LABEL git.commit=$git_commit
+LABEL git.branch=$git_branch
+LABEL build.on=$built_on
 WORKDIR /app
 COPY --from=build-env /go/src/github.com/rebuy-de/exporter-merger/merger.yaml /app/
 COPY --from=build-env /go/bin/exporter-merger /app/
