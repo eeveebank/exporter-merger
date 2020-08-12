@@ -1,8 +1,6 @@
 FROM golang:1.14.2 as builder
 WORKDIR /go/src/github.com/eeveebank/exporter-merger
 COPY . .
-RUN ls
-RUN echo $GOPATH
 RUN CGO_ENABLED=0 go build -o exporter-merger 
 
 # final stage
