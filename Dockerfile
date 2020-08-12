@@ -19,4 +19,4 @@ LABEL build.on=$built_on
 WORKDIR /app
 COPY --from=builder /go/src/github.com/eeveebank/exporter-merger/merger.yaml /
 COPY --from=builder /go/src/github.com/eeveebank/exporter-merger/exporter-merger /
-ENTRYPOINT ./exporter-merger
+ENTRYPOINT ["/exporter-merger"]
